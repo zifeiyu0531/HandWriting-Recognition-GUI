@@ -3,8 +3,8 @@
 import tensorflow as tf
 import numpy as np
 from PIL import Image
-from neural import backward
-from neural import forward
+import backward
+import forward
 
 
 def restore_model(testPicArr):
@@ -52,7 +52,7 @@ def pre_pic(picName):
 
 
 def application():
-    testPic = "C:/Users/11863/Documents/GitHub/HandWriting-Recognition-GUI/fc3/pic/5.png"
+    testPic = "C:/Users/11863/Documents/GitHub/HandWriting-Recognition-GUI/neural/pic/5.png"
     testPicArr = pre_pic(testPic)
     preValue = restore_model(testPicArr)
     print("The prediction number is:", preValue)

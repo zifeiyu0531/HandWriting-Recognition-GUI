@@ -1,7 +1,8 @@
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
-import forward
+from . import forward
 import os
+import shutil
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 BATCH_SIZE = 200
@@ -56,12 +57,10 @@ def backward(mnist):
                 print("After %d training step(s), loss on training batch is %g." % (step, loss_value))
                 saver.save(sess, os.path.join(MODEL_SAVE_PATH, MODEL_NAME), global_step=global_step)
 
+    return True
 
-def main():
+def main(isBegin):
+    if(isBegin):
+        shutil.rmtree(MODEL_SAVE_PATH)
     mnist = input_data.read_data_sets("./data/", one_hot=True)
-    backward(mnist)
-
-if __name__ == '__main__':
-    main()
-
-
+    return backward(mnist)

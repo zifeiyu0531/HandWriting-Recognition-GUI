@@ -3,8 +3,9 @@
 import tensorflow as tf
 import numpy as np
 from PIL import Image
-import backward
-import forward
+from . import backward
+from . import forward
+from cv import pre
 
 
 def restore_model(testPicArr):
@@ -32,9 +33,8 @@ def restore_model(testPicArr):
 
 
 def pre_pic(picName):
-    img = Image.open(picName)
-    reIm = img.resize((28, 28), Image.ANTIALIAS)
-    im_arr = np.array(reIm.convert('L'))
+    # 调用图片处理
+    im_arr = np.array(pre.image_process(picName))
     threshold = 50
     for i in range(28):
         for j in range(28):
@@ -51,16 +51,8 @@ def pre_pic(picName):
     return img_ready
 
 
-def application():
-    testPic = "C:/Users/11863/Documents/GitHub/HandWriting-Recognition-GUI/neural/pic/5.png"
-    testPicArr = pre_pic(testPic)
+def application(path):
+    testPicArr = pre_pic(path)
     preValue = restore_model(testPicArr)
-    print("The prediction number is:", preValue)
-
-
-def main():
-    application()
-
-
-if __name__ == '__main__':
-    main()
+    print(preValue[0])
+    return preValue[0]
